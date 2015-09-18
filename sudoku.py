@@ -28,18 +28,23 @@ REPODATA = {
   "packages": {}
 }
 
-def generate_info(name, build_string, depends):
+def generate_info(name, version, depends):
     return {
-        "{name}-a-{build_string}.tar.bz2".format(name=name, build_string=build_string): {
-            "build": build_string,
+        "{name}-{version}-sudoku.tar.bz2".format(name=name, version=version): {
+            "build": "sudoku",
             "build_number": 0,
             "date": datetime.date.today().strftime("%Y-%m-%d"),
             "depends": depends,
             "name": name,
             "size": 0,
-            "version": 'a'
+            "version": str(version)
             }
     }
+
+def all_but(version):
+    l = list(range(1, 10))
+    l.remove(version)
+    return "|".join(map(str, l))
 
 def generate_cells():
     packages = {}
@@ -52,21 +57,21 @@ def generate_cells():
                         continue
                     # Each entry being set (t) requires that the other entries
                     # are not set (f)
-                    depends.append("%sx%s-is-%s a f" % (row, column, d))
+                    depends.append("%sx%s-is %s" % (row, column, all_but(d)))
 
                 for other_row in range(1, 10):
                     if other_row == row:
                         continue
                     # If an entry is set, other cells in the same column can't
                     # have the same entry.
-                    depends.append("%sx%s-is-%s a f" % (other_row, column, entry))
+                    depends.append("%sx%s-is %s" % (other_row, column, all_but(entry)))
 
                 for other_column in range(1, 10):
                     if other_column == column:
                         continue
                     # If an entry is set, other cells in the same row can't
                     # have the same entry.
-                    depends.append("%sx%s-is-%s a f" % (row, other_column, entry))
+                    depends.append("%sx%s-is %s" % (row, other_column, all_but(entry)))
 
                 # x - (x - 1)%3 is the largest of 1, 4, 7 that is less than x
                 top_corner = (row - (row - 1)%3, column - (column - 1)%3)
@@ -76,42 +81,25 @@ def generate_cells():
                         continue
                     # If an entry is set, other cells in the same 3x3 square
                     # can't have the same entry.
-                    depends.append("%sx%s-is-%s a f" % (cell[0], cell[1], entry))
+                    depends.append("%sx%s-is %s" % (cell[0], cell[1], all_but(entry)))
 
-                p1 = generate_info("%sx%s-is-%s" % (row, column, entry), 't', depends)
-                p0 = generate_info("%sx%s-is-%s" % (row, column, entry), 'f', [])
-                packages.update({**p0, **p1})
-
-    return packages
-
-# In addition to the usual rules of sudoku, we need to assert that each cell
-# has an entry set. We do this by creating nine versions of a metapackage for
-# each cell which each depend on an entry.
-def generate_cell_metapackages():
-    packages = {}
-    for row in range(1, 10):
-        for column in range(1, 10):
-            for entry in range(1, 10):
-                p = generate_info("cell-%sx%s" % (row, column), str(entry),
-                    ["%sx%s-is-%s" % (row, column, entry)])
+                p = generate_info("%sx%s-is" % (row, column), entry, depends)
                 packages.update(p)
 
     return packages
 
 
-# Finally, we have one metapackage "sudoku" that depends on all the "cell"
-# metapackages.
-
+# Finally, we have one metapackage "sudoku" that depends on all the cell
+# metapackages. This ensures that every cell has a number.
 def generate_sudoku_metapackage():
     return generate_info("sudoku", '0',
-        ["cell-%sx%s" % (row, column)
+        ["%sx%s-is" % (row, column)
             for row in range(1, 10)
             for column in range(1, 10)])
 
 if __name__ == '__main__':
     packages = {
         **generate_sudoku_metapackage(),
-        **generate_cell_metapackages(),
         **generate_cells()
         }
     if not os.path.isdir(subdir):
