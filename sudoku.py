@@ -1,4 +1,5 @@
 import datetime
+import json
 
 REPODATA = {
   "info": {
@@ -85,3 +86,16 @@ def generate_sudoku_metapackage():
         ["cell-%sx%s" % (row, column)
             for row in range(1, 10)
             for column in range(1, 10)])
+
+if __name__ == '__main__':
+    packages = {
+        **generate_sudoku_metapackage(),
+        **generate_cell_metapackages(),
+        **generate_cells()
+        }
+    with open("repodata.json", 'w') as f:
+        r = REPODATA.copy()
+        r["packages"] = packages
+        json.dump(r, f, indent=2, sort_keys=True)
+
+    print("Wrote repodata.json")
