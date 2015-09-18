@@ -1,5 +1,13 @@
 import datetime
 
+REPODATA = {
+  "info": {
+    "arch": "x86_64",
+    "platform": "osx"
+  },
+  "packages": {}
+}
+
 def generate_info(name, version, depends):
     return {
         "{name}-{version}-0.tar.bz2".format(name=name, version=version): {
@@ -12,14 +20,6 @@ def generate_info(name, version, depends):
             "version": str(version)
             }
     }
-
-REPODATA = {
-  "info": {
-    "arch": "x86_64",
-    "platform": "osx"
-  },
-  "packages": {}
-}
 
 def generate_cells():
     packages = {}
