@@ -124,4 +124,4 @@ if __name__ == '__main__':
         fo.write(bz2.compress(data.encode('utf-8')))
 
     print("Wrote repodata.json")
-    print("Use conda -c file://" + os.path.abspath("."))
+    print("Use -c file://" + os.path.abspath("."))
