@@ -1,8 +1,24 @@
+import sys
+from platform import machine
 import os
 import datetime
 import json
 
-from conda.config import platform, arch_name
+
+# Taken from conda.config
+_sys_map = {'linux2': 'linux', 'linux': 'linux',
+            'darwin': 'osx', 'win32': 'win'}
+non_x86_linux_machines = {'armv6l', 'armv7l', 'ppc64le'}
+platform = _sys_map.get(sys.platform, 'unknown')
+bits = 8 * tuple.__itemsize__
+
+if platform == 'linux' and machine() in non_x86_linux_machines:
+    arch_name = machine()
+    subdir = 'linux-%s' % arch_name
+else:
+    arch_name = {64: 'x86_64', 32: 'x86'}[bits]
+    subdir = '%s-%d' % (platform, bits)
+
 
 REPODATA = {
   "info": {
