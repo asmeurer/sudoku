@@ -3,7 +3,7 @@ from platform import machine
 import os
 import datetime
 import json
-
+import bz2
 
 # Taken from conda.config
 _sys_map = {'linux2': 'linux', 'linux': 'linux',
@@ -112,12 +112,16 @@ if __name__ == '__main__':
         **generate_cell_metapackages(),
         **generate_cells()
         }
-    if not os.path.isdir(platform):
-        os.makedirs(platform)
-    with open(os.path.join(platform, "repodata.json"), 'w') as f:
+    if not os.path.isdir(subdir):
+        os.makedirs(subdir)
+    with open(os.path.join(subdir, "repodata.json"), 'w') as f:
         r = REPODATA.copy()
         r["packages"] = packages
-        json.dump(r, f, indent=2, sort_keys=True)
+        data = json.dumps(r, indent=2, sort_keys=True)
+        f.write(data)
+
+    with open(os.path.join(subdir, 'repodata.json.bz2'), 'wb') as fo:
+        fo.write(bz2.compress(data.encode('utf-8')))
 
     print("Wrote repodata.json")
     print("Use conda -c file://" + os.path.abspath("."))
