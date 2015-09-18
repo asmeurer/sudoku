@@ -112,7 +112,7 @@ if __name__ == '__main__':
         **generate_cell_metapackages(),
         **generate_cells()
         }
-    if not os.isdir(platform):
+    if not os.path.isdir(platform):
         os.makedirs(platform)
     with open(os.path.join(platform, "repodata.json"), 'w') as f:
         r = REPODATA.copy()
