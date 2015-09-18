@@ -50,8 +50,8 @@ def generate_cells():
                 for d in range(1, 10):
                     if d == entry:
                         continue
-                    # Each entry being set (version 1) requires that the other
-                    # entries are not set (version 0)
+                    # Each entry being set (t) requires that the other entries
+                    # are not set (f)
                     depends.append("%sx%s-is-%s a f" % (row, column, d))
 
                 for other_row in range(1, 10):
