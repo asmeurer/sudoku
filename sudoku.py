@@ -1,10 +1,13 @@
+import os
 import datetime
 import json
 
+from conda.config import platform, arch_name
+
 REPODATA = {
   "info": {
-    "arch": "x86_64",
-    "platform": "osx"
+    "arch": arch_name,
+    "platform": platform,
   },
   "packages": {}
 }
@@ -93,7 +96,9 @@ if __name__ == '__main__':
         **generate_cell_metapackages(),
         **generate_cells()
         }
-    with open("repodata.json", 'w') as f:
+    if not os.isdir(platform):
+        os.makedirs(platform)
+    with open(os.path.join(platform, "repodata.json"), 'w') as f:
         r = REPODATA.copy()
         r["packages"] = packages
         json.dump(r, f, indent=2, sort_keys=True)
