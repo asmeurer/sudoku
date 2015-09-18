@@ -120,3 +120,4 @@ if __name__ == '__main__':
         json.dump(r, f, indent=2, sort_keys=True)
 
     print("Wrote repodata.json")
+    print("Use conda -c file://" + os.path.abspath("."))
