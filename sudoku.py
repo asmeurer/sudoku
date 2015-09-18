@@ -72,6 +72,8 @@ def generate_cells():
                 top_corner = (row - (row - 1)%3, column - (column - 1)%3)
                 for i in range(9):
                     cell = (top_corner[0] + i//3, top_corner[1] + i%3)
+                    if cell == (row, column):
+                        continue
                     # If an entry is set, other cells in the same 3x3 square
                     # can't have the same entry.
                     depends.append("%sx%s-is-%s 0" % (cell[0], cell[1], entry))
