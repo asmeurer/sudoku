@@ -26,7 +26,7 @@ def generate_cells():
     for row in range(1, 10):
         for column in range(1, 10):
             for entry in range(1, 10):
-                depends = []
+                depends = ["sudoku"]
                 for d in range(1, 10):
                     if d == entry:
                         continue
@@ -62,4 +62,26 @@ def generate_cells():
 
     return packages
 
-print(generate_cells())
+# In addition to the usual rules of sudoku, we need to assert that each cell
+# has an entry set. We do this by creating nine versions of a metapackage for
+# each cell which each depend on an entry.
+def generate_cell_metapackages():
+    packages = {}
+    for row in range(1, 10):
+        for column in range(1, 10):
+            for entry in range(1, 10):
+                p = generate_info("cell-%sx%s" % (row, column), entry,
+                    ["%sx%s-is-%s" % (row, column, entry)])
+                packages.update(p)
+
+    return packages
+
+
+# Finally, we have one metapackage "sudoku" that depends on all the "cell"
+# metapackages.
+
+def generate_sudoku_metapackage():
+    return generate_info("sudoku", 0,
+        ["cell-%sx%s" % (row, column)
+            for row in range(1, 10)
+            for column in range(1, 10)])
