@@ -41,11 +41,6 @@ def generate_info(name, version, depends):
             }
     }
 
-def all_but(version):
-    l = list(range(1, 10))
-    l.remove(version)
-    return "|".join(map(str, l))
-
 def generate_cells():
     packages = {}
     for row in range(1, 10):
@@ -57,21 +52,21 @@ def generate_cells():
                         continue
                     # Each entry being set (t) requires that the other entries
                     # are not set (f)
-                    depends.append("%sx%s-is %s" % (row, column, all_but(d)))
+                    depends.append("%sx%s-is !=%s" % (row, column, d))
 
                 for other_row in range(1, 10):
                     if other_row == row:
                         continue
                     # If an entry is set, other cells in the same column can't
                     # have the same entry.
-                    depends.append("%sx%s-is %s" % (other_row, column, all_but(entry)))
+                    depends.append("%sx%s-is !=%s" % (other_row, column, entry))
 
                 for other_column in range(1, 10):
                     if other_column == column:
                         continue
                     # If an entry is set, other cells in the same row can't
                     # have the same entry.
-                    depends.append("%sx%s-is %s" % (row, other_column, all_but(entry)))
+                    depends.append("%sx%s-is !=%s" % (row, other_column, entry))
 
                 # x - (x - 1)%3 is the largest of 1, 4, 7 that is less than x
                 top_corner = (row - (row - 1)%3, column - (column - 1)%3)
@@ -81,7 +76,7 @@ def generate_cells():
                         continue
                     # If an entry is set, other cells in the same 3x3 square
                     # can't have the same entry.
-                    depends.append("%sx%s-is %s" % (cell[0], cell[1], all_but(entry)))
+                    depends.append("%sx%s-is !=%s" % (cell[0], cell[1], entry))
 
                 p = generate_info("%sx%s-is" % (row, column), entry, depends)
                 packages.update(p)
