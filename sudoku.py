@@ -72,6 +72,8 @@ def generate_cells():
                     # can't have the same entry.
                     depends.append("%sx%s-is !=%s" % (cell[0], cell[1], entry))
 
+                # Remove duplicates, keeping order
+                depends = sorted(set(depends), key=depends.index)
                 p = generate_info("%sx%s-is" % (row, column), entry, depends)
                 packages.update(p)
 
