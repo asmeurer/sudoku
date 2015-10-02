@@ -3,6 +3,14 @@ Sudoku with conda
 
 Solve Sudoku puzzles with conda.
 
+**NOTE**: This is for fun only. If you want to actually solve Sudoku puzzles,
+there are much better solvers out there. If you want to solve them using a SAT
+solver, take a look at
+[this blog post](https://www.continuum.io/blog/developer/sat-based-sudoku-solver-python)
+by conda developer Ilan Schnell, which originally inspired this idea.
+
+## How to use
+
 To use this, run
 
      python3.5 sudoku.py
