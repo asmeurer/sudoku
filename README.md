@@ -180,7 +180,7 @@ square be in either cell 4 x 6 or 6 x 6 (we can see that in the solution to
 the full puzzle indeed cell 6 x 6 is a 4). In either case, that is the 4 for
 the 6th column, so cell 1 x 6 cannot be 4.
 
-# Multiple solutions
+## Multiple solutions
 
 A true Sudoku puzzle has a unique solution, but what if we remove some of the
 numbers?
@@ -209,7 +209,7 @@ puzzle that has many possible solutions conda may hang while it tries to
 generate all of them. `conda install sudoku` will try to generate *every*
 puzzle. This is not recommended!
 
-# How does it work?
+## How does it work?
 
 Let's look at the dependencies of one of the packages from the generated
 `repodata.json`:
