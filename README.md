@@ -34,7 +34,7 @@ Then take the puzzle. Say you have (from
 
 This corresponds to
 
-    conda install --dry-run -c \
+    conda create -n sudoku --dry-run -c \
     file:///Users/aaronmeurer/Documents/Continuum/sudoku --override-channels \
     1x1-is=5 1x2-is=3 1x5-is=7 2x1-is=6 2x4-is=1 2x5-is=9 2x6-is=5 3x2-is=9 \
     3x3-is=8 3x8-is=6 4x1-is=8 4x5-is=6 4x9-is=3 5x1-is=4 5x4-is=8 5x6-is=3 \
@@ -147,7 +147,7 @@ hint. For example, if you take the above puzzle and add `1x3-is=8`, this is
 clearly incorrect (there is already an 8 in cell 3 x 3, which is both in the
 same column and the same 3x3 square).
 
-    conda install -c file:///Users/aaronmeurer/Documents/Continuum/sudoku \
+    conda create -n sudoku -c file:///Users/aaronmeurer/Documents/Continuum/sudoku \
     --override-channels --dry-run 1x1-is=5 1x2-is=3 1x5-is=7 2x1-is=6 2x4-is=1 \
     2x5-is=9 2x6-is=5 3x2-is=9 3x3-is=8 3x8-is=6 4x1-is=8 4x5-is=6 4x9-is=3 \
     5x1-is=4 5x4-is=8 5x6-is=3 5x9-is=1 6x1-is=7 6x5-is=2 6x9-is=6 7x2-is=6 \
@@ -172,7 +172,7 @@ Now let's take a more complicated example. What if we try to set
 it's not immediately obvious from the initial puzzle why it can't be a 4.
 Let's see what conda tells us
 
-    conda --debug install -c \
+    conda --debug create -n sudoku -c \
     file:///Users/aaronmeurer/Documents/Continuum/sudoku --override-channels \
     --dry-run 1x1-is=5 1x2-is=3 1x5-is=7 2x1-is=6 2x4-is=1 2x5-is=9 2x6-is=5 \
     3x2-is=9 3x3-is=8 3x8-is=6 4x1-is=8 4x5-is=6 4x9-is=3 5x1-is=4 5x4-is=8 \
@@ -190,9 +190,9 @@ Let's see what conda tells us
 
 When conda generates a "hint" it tries to find a minimal subset of the
 specified packages that do not work together (minimal meaning that any smaller
-subset would be satisfiable). You can run `conda --debug install -c ...` to
-get a closer look at this bisection process. Let's look at a puzzle with just
-these values.
+subset would be satisfiable). You can run `conda --debug create -n sudoku -c
+...` to get a closer look at this bisection process. Let's look at a puzzle
+with just these values.
 
 ![1x6-is=4.png](1x6-is=4.png)
 
@@ -215,7 +215,7 @@ multiple set of solutions will be considered feasible by conda.
 
 Suppose we remove the last two entries (9 x 8 and 9 x 9).
 
-    conda install -c file:///Users/aaronmeurer/Documents/Continuum/sudoku \
+    conda create -n sudoku -c file:///Users/aaronmeurer/Documents/Continuum/sudoku \
     --override-channels --dry-run 1x1-is=5 1x2-is=3 1x5-is=7 2x1-is=6 2x4-is=1 \
     2x5-is=9 2x6-is=5 3x2-is=9 3x3-is=8 3x8-is=6 4x1-is=8 4x5-is=6 4x9-is=3 \
     5x1-is=4 5x4-is=8 5x6-is=3 5x9-is=1 6x1-is=7 6x5-is=2 6x9-is=6 7x2-is=6 \
