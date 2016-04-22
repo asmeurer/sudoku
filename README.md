@@ -147,7 +147,12 @@ hint. For example, if you take the above puzzle and add `1x3-is=8`, this is
 clearly incorrect (there is already an 8 in cell 3 x 3, which is both in the
 same column and the same 3x3 square).
 
-    conda install -c file:///Users/aaronmeurer/Documents/Continuum/sudoku --override-channels --dry-run 1x1-is=5 1x2-is=3 1x5-is=7 2x1-is=6 2x4-is=1 2x5-is=9 2x6-is=5 3x2-is=9 3x3-is=8 3x8-is=6 4x1-is=8 4x5-is=6 4x9-is=3 5x1-is=4 5x4-is=8 5x6-is=3 5x9-is=1 6x1-is=7 6x5-is=2 6x9-is=6 7x2-is=6 7x7-is=2 7x8-is=8 8x4-is=4 8x5-is=1 8x6-is=9 8x9-is=5 9x5-is=8 9x8-is=7 9x9-is=9 1x3-is=8
+    conda install -c file:///Users/aaronmeurer/Documents/Continuum/sudoku \
+    --override-channels --dry-run 1x1-is=5 1x2-is=3 1x5-is=7 2x1-is=6 2x4-is=1 \
+    2x5-is=9 2x6-is=5 3x2-is=9 3x3-is=8 3x8-is=6 4x1-is=8 4x5-is=6 4x9-is=3 \
+    5x1-is=4 5x4-is=8 5x6-is=3 5x9-is=1 6x1-is=7 6x5-is=2 6x9-is=6 7x2-is=6 \
+    7x7-is=2 7x8-is=8 8x4-is=4 8x5-is=1 8x6-is=9 8x9-is=5 9x5-is=8 9x8-is=7 \
+    9x9-is=9 1x3-is=8
     Fetching package metadata: ..
     Solving package specifications: .
     Error: Unsatisfiable package specifications.
@@ -167,7 +172,12 @@ Now let's take a more complicated example. What if we try to set
 it's not immediately obvious from the initial puzzle why it can't be a 4.
 Let's see what conda tells us
 
-    conda --debug install -c file:///Users/aaronmeurer/Documents/Continuum/sudoku --override-channels --dry-run 1x1-is=5 1x2-is=3 1x5-is=7 2x1-is=6 2x4-is=1 2x5-is=9 2x6-is=5 3x2-is=9 3x3-is=8 3x8-is=6 4x1-is=8 4x5-is=6 4x9-is=3 5x1-is=4 5x4-is=8 5x6-is=3 5x9-is=1 6x1-is=7 6x5-is=2 6x9-is=6 7x2-is=6 7x7-is=2 7x8-is=8 8x4-is=4 8x5-is=1 8x6-is=9 8x9-is=5 9x5-is=8 9x8-is=7 9x9-is=9 1x6-is=4
+    conda --debug install -c \
+    file:///Users/aaronmeurer/Documents/Continuum/sudoku --override-channels \
+    --dry-run 1x1-is=5 1x2-is=3 1x5-is=7 2x1-is=6 2x4-is=1 2x5-is=9 2x6-is=5 \
+    3x2-is=9 3x3-is=8 3x8-is=6 4x1-is=8 4x5-is=6 4x9-is=3 5x1-is=4 5x4-is=8 \
+    5x6-is=3 5x9-is=1 6x1-is=7 6x5-is=2 6x9-is=6 7x2-is=6 7x7-is=2 7x8-is=8 \
+    8x4-is=4 8x5-is=1 8x6-is=9 8x9-is=5 9x5-is=8 9x8-is=7 9x9-is=9 1x6-is=4
 
     [      COMPLETE      ]|############################################################################| 100%
 
@@ -205,7 +215,11 @@ multiple set of solutions will be considered feasible by conda.
 
 Suppose we remove the last two entries (9 x 8 and 9 x 9).
 
-    conda install -c file:///Users/aaronmeurer/Documents/Continuum/sudoku --override-channels --dry-run 1x1-is=5 1x2-is=3 1x5-is=7 2x1-is=6 2x4-is=1 2x5-is=9 2x6-is=5 3x2-is=9 3x3-is=8 3x8-is=6 4x1-is=8 4x5-is=6 4x9-is=3 5x1-is=4 5x4-is=8 5x6-is=3 5x9-is=1 6x1-is=7 6x5-is=2 6x9-is=6 7x2-is=6 7x7-is=2 7x8-is=8 8x4-is=4 8x5-is=1 8x6-is=9 8x9-is=5 9x5-is=8
+    conda install -c file:///Users/aaronmeurer/Documents/Continuum/sudoku \
+    --override-channels --dry-run 1x1-is=5 1x2-is=3 1x5-is=7 2x1-is=6 2x4-is=1 \
+    2x5-is=9 2x6-is=5 3x2-is=9 3x3-is=8 3x8-is=6 4x1-is=8 4x5-is=6 4x9-is=3 \
+    5x1-is=4 5x4-is=8 5x6-is=3 5x9-is=1 6x1-is=7 6x5-is=2 6x9-is=6 7x2-is=6 \
+    7x7-is=2 7x8-is=8 8x4-is=4 8x5-is=1 8x6-is=9 8x9-is=5 9x5-is=8
     Fetching package metadata: ..
     Solving package specifications: ....................................................................
     Warning: 2 possible package resolutions (only showing differing packages):
